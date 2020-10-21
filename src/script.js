@@ -112,24 +112,33 @@ const nodesHierarchy = {
 };
 
 function renderTree(tree) {
+
     const rootUlElement = document.createElement("ul");
-    tree.children.map(item => {
+
+    tree.map((item) => {
         const li = document.createElement("li");
         li.innerHTML = item.label;
-        renderTree(item)
+        rootUlElement.append(li);
+
+        const treeElement = renderTree(item.children);
+
+        rootUlElement.append(treeElement)
+
     });
+
     return rootUlElement;
 }
 
 export function renderPage() {
-    const browserTreeList = renderTree(browserTree);
-    const nodesHierarchyList = renderTree(nodesHierarchy);
     const rootDiv = document.getElementById("root");
-    rootDiv.append(browserTreeList);
-    rootDiv.append(nodesHierarchyList);
+
+    rootDiv.append(renderTree([browserTree]));
+    rootDiv.append(renderTree([nodesHierarchy]));
+
+
 }
 
-
+//
 // const object = {
 //     label: "rita",
 //     children: {
@@ -156,9 +165,9 @@ export function renderPage() {
 //
 // test(object);
 // treeElement.appendChild(ul);
-
-
-
+//
+//
+// //
 
 
 
